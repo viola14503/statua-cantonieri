@@ -17,11 +17,28 @@
       justify-content: center;
       align-items: center;
       height: 100vh;
+      font-family: system-ui, sans-serif;
     }
 
     model-viewer {
       width: 80vw;
       height: 80vh;
+    }
+
+    .ios-warning {
+      position: fixed;
+      bottom: 15px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(0, 0, 0, 0.75);
+      color: #fff;
+      padding: 10px 16px;
+      border-radius: 12px;
+      font-size: 14px;
+      max-width: 90%;
+      text-align: center;
+      z-index: 9999;
+      backdrop-filter: blur(6px);
     }
   </style>
 </head>
@@ -40,6 +57,25 @@
   >
   </model-viewer>
 
+
+  <!-- Script per mostrare avviso su iOS NON Safari -->
+  <script>
+    const ua = navigator.userAgent;
+
+    const isIOS = /iPhone|iPad|iPod/i.test(ua);
+    const isSafari = /^((?!CriOS|FxiOS|EdgiOS).)*Safari/i.test(ua); 
+    // Safari è l'unico che può lanciare Quick Look AR
+
+    if (isIOS && !isSafari) {
+      const msg = document.createElement('div');
+      msg.className = 'ios-warning';
+      msg.textContent = 'Per usare la realtà aumentata su iPhone/iPad, apri questa pagina con Safari.';
+      document.body.appendChild(msg);
+
+      // Nasconde il messaggio dopo 8 secondi
+      setTimeout(() => msg.remove(), 8000);
+    }
+  </script>
+
 </body>
 </html>
-
