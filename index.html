@@ -25,66 +25,56 @@
       height: 80vh;
     }
 
-    /* Messaggio per utenti iOS con browser non Safari */
+    /* Messaggio iOS (browser non Safari) */
     .ios-warning {
       position: fixed;
       bottom: 15px;
       left: 50%;
       transform: translateX(-50%);
-      background: rgba(255, 0, 0, 0.95);
-      color: #fff;
-      padding: 14px 20px;
-      border-radius: 14px;
-      font-size: 16px;
-      font-weight: 600;
+      background: #ffffff;
+      color: #ff0000;
+      padding: 16px 22px;
+      border-radius: 16px;
+      font-size: 18px;
+      font-weight: 700;
       max-width: 90%;
       text-align: center;
       z-index: 9999;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
-      border: 2px solid #fff;
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4);
+      border: 3px solid #ff0000;
     }
 
-    /* Bottone AR personalizzato */
-    .ar-button {
+    /* Bottone AR personalizzato (cubo originale + testo) */
+    .ar-button-custom {
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 8px;
+      gap: 10px;
       background: transparent;
       border: none;
       cursor: pointer;
-      outline: none;
     }
 
-    .ar-button-cube {
-      width: 90px;
-      height: 90px;
-      border-radius: 18px;
-      border: 3px solid #ffffff;
-      background: linear-gradient(135deg, #ffffff33, #ffffff05);
-      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.7);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 32px;
-      font-weight: bold;
-      color: #ffffff;
+    /* Icona cubo originale di model-viewer */
+    .ar-icon-default {
+      width: 70px;       /* GRANDEZZA DEL CUBO */
+      height: 70px;
+      background-image: url('https://modelviewer.dev/assets/icons/ic_view_in_ar_new_64dp.png');
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: center;
+      filter: drop-shadow(0px 0px 8px #000);  /* leggero glow */
     }
 
+    /* Testo sotto il pulsante AR */
     .ar-button-text {
-      color: #ffffff;
-      font-size: 14px;
+      color: white;
+      font-size: 18px;
       font-weight: 600;
-      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
-      background: rgba(0, 0, 0, 0.5);
-      padding: 4px 10px;
+      background: rgba(0,0,0,0.5);
+      padding: 6px 14px;
       border-radius: 999px;
-    }
-
-    /* Effetto pressione sul bottone AR */
-    .ar-button:active .ar-button-cube {
-      transform: scale(0.96);
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.6);
+      text-shadow: 0 2px 4px rgba(0,0,0,0.8);
     }
   </style>
 </head>
@@ -101,21 +91,21 @@
     ar-modes="webxr scene-viewer quick-look"
     ar-scale="fixed"
   >
-    <!-- Bottone AR personalizzato (compare solo dove l'AR è supportata) -->
-    <button slot="ar-button" class="ar-button">
-      <div class="ar-button-cube">▢</div>
-      <div class="ar-button-text">Clicca qui per la realtà aumentata</div>
+
+    <!-- Pulsante AR con cubo originale + testo -->
+    <button slot="ar-button" class="ar-button-custom">
+      <div class="ar-icon-default"></div>
+      <div class="ar-button-text">visualizza in AR</div>
     </button>
+
   </model-viewer>
 
-
-  <!-- Script per mostrare avviso su iOS NON Safari -->
+  <!-- Script: avviso per utenti iOS non Safari -->
   <script>
     const ua = navigator.userAgent;
 
     const isIOS = /iPhone|iPad|iPod/i.test(ua);
     const isSafari = /^((?!CriOS|FxiOS|EdgiOS).)*Safari/i.test(ua);
-    // Safari è l'unico che può lanciare Quick Look AR
 
     if (isIOS && !isSafari) {
       const msg = document.createElement('div');
@@ -127,6 +117,8 @@
 
 </body>
 </html>
+
+
 
 
 
