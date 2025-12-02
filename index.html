@@ -25,20 +25,66 @@
       height: 80vh;
     }
 
+    /* Messaggio per utenti iOS con browser non Safari */
     .ios-warning {
       position: fixed;
       bottom: 15px;
       left: 50%;
       transform: translateX(-50%);
-      background: rgba(0, 0, 0, 0.75);
+      background: rgba(255, 0, 0, 0.95);
       color: #fff;
-      padding: 10px 16px;
-      border-radius: 12px;
-      font-size: 14px;
+      padding: 14px 20px;
+      border-radius: 14px;
+      font-size: 16px;
+      font-weight: 600;
       max-width: 90%;
       text-align: center;
       z-index: 9999;
-      backdrop-filter: blur(6px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+      border: 2px solid #fff;
+    }
+
+    /* Bottone AR personalizzato */
+    .ar-button {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      outline: none;
+    }
+
+    .ar-button-cube {
+      width: 90px;
+      height: 90px;
+      border-radius: 18px;
+      border: 3px solid #ffffff;
+      background: linear-gradient(135deg, #ffffff33, #ffffff05);
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.7);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 32px;
+      font-weight: bold;
+      color: #ffffff;
+    }
+
+    .ar-button-text {
+      color: #ffffff;
+      font-size: 14px;
+      font-weight: 600;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
+      background: rgba(0, 0, 0, 0.5);
+      padding: 4px 10px;
+      border-radius: 999px;
+    }
+
+    /* Effetto pressione sul bottone AR */
+    .ar-button:active .ar-button-cube {
+      transform: scale(0.96);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.6);
     }
   </style>
 </head>
@@ -55,6 +101,11 @@
     ar-modes="webxr scene-viewer quick-look"
     ar-scale="fixed"
   >
+    <!-- Bottone AR personalizzato (compare solo dove l'AR è supportata) -->
+    <button slot="ar-button" class="ar-button">
+      <div class="ar-button-cube">▢</div>
+      <div class="ar-button-text">Clicca qui per la realtà aumentata</div>
+    </button>
   </model-viewer>
 
 
@@ -63,7 +114,7 @@
     const ua = navigator.userAgent;
 
     const isIOS = /iPhone|iPad|iPod/i.test(ua);
-    const isSafari = /^((?!CriOS|FxiOS|EdgiOS).)*Safari/i.test(ua); 
+    const isSafari = /^((?!CriOS|FxiOS|EdgiOS).)*Safari/i.test(ua);
     // Safari è l'unico che può lanciare Quick Look AR
 
     if (isIOS && !isSafari) {
@@ -71,11 +122,11 @@
       msg.className = 'ios-warning';
       msg.textContent = 'Per usare la realtà aumentata su iPhone/iPad, apri questa pagina con Safari.';
       document.body.appendChild(msg);
-
-      // Nasconde il messaggio dopo 8 secondi
-      setTimeout(() => msg.remove(), 8000);
     }
   </script>
 
 </body>
 </html>
+
+
+
